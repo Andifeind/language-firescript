@@ -3,13 +3,22 @@
   "main": "./lib/index.js",
   "version": "0.0.0",
   "description": "A short description of your package",
-  "keywords": [
-  ],
-  "repository": "https://github.com/atom/language-firescript",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andifeind/language-firescript.git"
+  },
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {},
+  "bugs": {
+    "url": "https://github.com/atom/language-firescript/issues"
+  },
+  "homepage": "https://github.com/atom/language-firescript#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andi Heinkelein <andifeind@noname-media.com>"
 }
