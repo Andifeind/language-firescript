@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/atom/language-firescript/issues"
   },
-  "homepage": "https://github.com/atom/language-firescript#readme",
+  "homepage": "https://atom.github.io/language-python",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
