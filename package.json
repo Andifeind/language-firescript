@@ -6,7 +6,7 @@
   "keywords": [],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Andifeind/language-firescript.git"
+    "url": "https://github.com/Andifeind/language-firescript.git"
   },
   "license": "MIT",
   "engines": {
