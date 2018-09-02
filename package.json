@@ -2,11 +2,15 @@
   "name": "language-firescript",
   "main": "./lib/index.js",
   "version": "0.1.0",
-  "description": "A short description of your package",
-  "keywords": [],
+  "description": "Syntax highlighter for Firescript",
+  "keywords": [
+    "fire",
+    "firescript",
+    "syntax"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Andifeind/language-firescript.git"
+    "url": "git@github.com:Andifeind/language-firescript.git"
   },
   "license": "MIT",
   "engines": {
@@ -14,9 +18,9 @@
   },
   "dependencies": {},
   "bugs": {
-    "url": "https://github.com/atom/language-firescript/issues"
+    "url": "https://github.com/Andifeind/language-firescript/issues"
   },
-  "homepage": "https://atom.github.io/language-python",
+  "homepage": "https://github.com/Andifeind/language-firescript",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
