@@ -28,7 +28,7 @@ patterns: [ # An array of individual pattern declarations.
 
   # keywords
   {
-    match: 'async|await|break|case|catch|class|const|continue|debugger|default|do|elif|else|export|extends|for|func|gen|if|import|let|new|return|switch|try|var|while|yield'
+    match: '\\b(sync|await|break|case|catch|class|const|continue|debugger|default|do|elif|else|export|extends|for|func|gen|if|import|let|new|return|switch|try|var|while|yield)\\b'
     name: 'keyword.control.fire'
   }
 
