@@ -45,6 +45,11 @@ patterns: [ # An array of individual pattern declarations.
     name: 'string.fire'
   }
 
+  # comments
+  {
+    include: '#comments'
+  }
+
   # binary operators
   {
     match: 'instanceof|in|\\+|\\-|\\*|/|%|\\*\\*|\\||\\^|\\&|==|!=|===|!==|<|>|>=|<=|<<|>>|>>>'
@@ -77,12 +82,39 @@ patterns: [ # An array of individual pattern declarations.
 ]
 
 repository: # An array of rules. If you're going to be referencing one bit of code over and over again, stick it here so that you can edit all in one place.
-  ruleName: # Can be anything.
-    {
-      name: ''
-      match: ''
-      end: ''
-      endCaptures:
-        0:
-          name: ''
-}
+  comments:
+    patterns: [
+      {
+        name: 'comment.block.documentation.fire'
+        begin: '/\\*\\*'
+        beginCaptures:
+          '0':
+            name: 'punctuation.definition.comment.begin.fire'
+        end: '\\*/'
+        endCaptures:
+          '0':
+            name: 'punctuation.definition.comment.end.fire'
+      }
+      {
+        name: 'comment.block.fire'
+        begin: '/\\*'
+        beginCaptures:
+          '0':
+            name: 'punctuation.definition.comment.begin.fire'
+        end: '\\*/'
+        endCaptures:
+          '0':
+            name: 'punctuation.definition.comment.end.fire'
+      }
+      {
+        name: 'comment.line.fire'
+        begin: '#'
+        beginCaptures:
+          '0':
+            name: 'punctuation.definition.comment.begin.fire'
+        end: '$'
+        endCaptures:
+          '0':
+            name: 'punctuation.definition.comment.end.fire'
+      }
+    ]
