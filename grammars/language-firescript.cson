@@ -77,11 +77,6 @@ patterns: [ # An array of individual pattern declarations.
     match: '\\.\\.\\.|\\.|\\(|\\)|\\{|\\}|\\[|\\]|,|:|;|\\?'
     name: 'keyword.operator.other.fire'
   }
-
-  # illegal stuff
-  {
-    include: '#illegal'
-  }
 ]
 
 repository: # An array of rules. If you're going to be referencing one bit of code over and over again, stick it here so that you can edit all in one place.
@@ -120,6 +115,13 @@ repository: # An array of rules. If you're going to be referencing one bit of co
           '0':
             name: 'punctuation.definition.comment.end.fire'
       }
+
+      # js style comments are illegal
+      {
+        name: 'invalid.illegal.fire'
+        begin: '//'
+        end: '$'
+      }
     ]
 
   strings:
@@ -129,10 +131,8 @@ repository: # An array of rules. If you're going to be referencing one bit of co
         end: '\\\''
         name: 'string.fire'
       }
-    ]
 
-  illegal:
-    patterns: [
+      # js style strings are illegal
       {
         name: 'invalid.illegal.fire'
         begin: '`'
