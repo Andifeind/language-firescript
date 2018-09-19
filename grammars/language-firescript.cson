@@ -28,7 +28,7 @@ patterns: [ # An array of individual pattern declarations.
 
   # keywords
   {
-    match: '(?<!\\.)\\b(sync|await|break|case|catch|const|continue|debugger|default|do|elif|else|export|for|func|gen|if|import|let|new|return|switch|try|var|while|yield)(?!\\s*:)\\b'
+    match: '(?<!\\.)\\b(sync|await|break|case|catch|continue|debugger|default|do|elif|else|export|for|func|gen|if|import|new|return|switch|try|while|yield)(?!\\s*:)\\b'
     name: 'keyword.control.fire'
   }
 
@@ -47,6 +47,30 @@ patterns: [ # An array of individual pattern declarations.
       5:
         name: 'invalid.illegal.fire'
     name: 'meta.class.fire'
+  }
+
+  # let / var
+  {
+    match: '(?<!\\.)\\b(let|var)(?!\\s*:)(?:\\s+(any|arr|bool|func|num|obj|reg|str))?\\b(?:\\s+([a-zA-Z_$][\\w$]*))'
+    captures:
+      1:
+        name: 'storage.type.var.fire'
+      2:
+        name: 'support.type.fire'
+      3:
+        name: 'constant.other.fire'
+  }
+
+  # const
+  {
+    match: '(?<!\\.)\\b(const)(?!\\s*:)(?:\\s+(any|arr|bool|func|num|obj|reg|str))?\\b(?:\\s+([a-zA-Z_$][\\w$]*))'
+    captures:
+      1:
+        name: 'storage.type.const.fire'
+      2:
+        name: 'support.type.fire'
+      3:
+        name: 'constant.other.fire'
   }
 
   # identifier
