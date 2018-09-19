@@ -28,8 +28,25 @@ patterns: [ # An array of individual pattern declarations.
 
   # keywords
   {
-    match: '\\b(sync|await|break|case|catch|class|const|continue|debugger|default|do|elif|else|export|extends|for|func|gen|if|import|let|new|return|switch|try|var|while|yield)\\b'
+    match: '(?<!\\.)\\b(sync|await|break|case|catch|const|continue|debugger|default|do|elif|else|export|for|func|gen|if|import|let|new|return|switch|try|var|while|yield)(?!\\s*:)\\b'
     name: 'keyword.control.fire'
+  }
+
+  # class
+  {
+    match: '(?<!\\.)\\b(class)(?:\\s+([a-zA-Z_$][\\w$]*))(?:\\s+(extends)\\s+([a-zA-Z_$][\\w$]*))?(\\s\\{)?'
+    captures:
+      1:
+        name: 'storage.type.class.fire'
+      2:
+        name: 'entity.name.type.class.fire'
+      3:
+        name: 'storage.modifier.fire'
+      4:
+        name: 'entity.other.inherited-class.fire'
+      5:
+        name: 'invalid.illegal.fire'
+    name: 'meta.class.fire'
   }
 
   # identifier
@@ -77,6 +94,12 @@ patterns: [ # An array of individual pattern declarations.
     match: '\\.\\.\\.|\\.|\\(|\\)|\\{|\\}|\\[|\\]|,|:|;|\\?'
     name: 'keyword.operator.other.fire'
   }
+
+  # anything else
+  # {
+  #   match: '.+\\b'
+  #   name: 'invalid.illegal.fire'
+  # }
 ]
 
 repository: # An array of rules. If you're going to be referencing one bit of code over and over again, stick it here so that you can edit all in one place.
