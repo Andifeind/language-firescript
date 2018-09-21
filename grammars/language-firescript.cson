@@ -28,7 +28,7 @@ patterns: [ # An array of individual pattern declarations.
 
   # keywords
   {
-    match: '(?<!\\.)\\b(sync|await|break|case|catch|continue|debugger|default|do|elif|else|export|for|func|gen|if|import|new|return|switch|try|while|yield)(?!\\s*:)\\b'
+    match: '(?<!\\.)\\b(sync|await|break|case|catch|continue|debugger|default|do|export|for|func|gen|import|new|return|switch|try|while|yield)(?!\\s*:)\\b'
     name: 'keyword.control.fire'
   }
 
@@ -73,10 +73,29 @@ patterns: [ # An array of individual pattern declarations.
         name: 'constant.other.fire'
   }
 
+  # if .. else
+  {
+    begin: '(?<!\\.)\\b((?:el)?if)(?!\\s*:)\\s*'
+    end: '$'
+    beginCaptures:
+      1:
+        name: 'keyword.control.js'
+    patterns: [
+      {
+        include: '#expressions'
+      }
+      {
+        include: '#comments'
+      }
+      {
+        include: '#illegal_chars'
+      }
+    ]
+  }
+
   # identifier
   {
-    match: '\\b[a-zA-Z0-9_]+\\b',
-    name: 'variable.other.identifier.fire'
+    include: '#identifier'
   }
 
   # strings
@@ -189,5 +208,34 @@ repository: # An array of rules. If you're going to be referencing one bit of co
         name: 'invalid.illegal.fire'
         begin: '"'
         end: '"'
+      }
+    ]
+
+  identifier:
+    patterns: [
+      {
+        match: '\\b[a-zA-Z0-9_]+\\b',
+        name: 'variable.other.identifier.fire'
+      }
+    ]
+
+  illegal_chars:
+    patterns: [
+      {
+        name: 'invalid.illegal.fire'
+        match: '\\s*.+'
+      }
+    ]
+
+  expressions:
+    patterns: [
+      {
+        include: '#strings'
+      }
+      {
+        include: '#identifier'
+      }
+      {
+        include: '#comments'
       }
     ]
