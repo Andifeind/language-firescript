@@ -1,0 +1,30 @@
+if aa(bla, 123, 'sd')
+  log 'Foo'
+elif as
+  log 'Other'
+
+foo(bar(), bla())
+
+# function declaration
+
+func foo ()
+  const a = 'bb'
+  return a
+
+
+# async function declaration
+
+async foo ()
+  const a = 'bb'
+  return a
+
+# JS style functions (illegal)
+
+function bla ()
+  return 'Nothing'
+
+# function arguments
+
+func foo (arg, second, third = 123)
+  const a = 'bb'
+  return a

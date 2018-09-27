@@ -79,7 +79,7 @@ patterns: [ # An array of individual pattern declarations.
     end: '$'
     beginCaptures:
       1:
-        name: 'keyword.control.js'
+        name: 'keyword.control.fire'
     patterns: [
       {
         include: '#expressions'
@@ -91,6 +91,26 @@ patterns: [ # An array of individual pattern declarations.
         include: '#illegal_chars'
       }
     ]
+  }
+
+  # else
+  {
+    match: '(?<!\\.)\\b(else)(?:\\s+(if))?(?!\\s*:)\\s*'
+    captures:
+      '1':
+         name: 'keyword.control.fire'
+      '2':
+        name: 'invalid.illegal.fire'
+  }
+
+  # function calls
+  {
+    include: '#call_expression'
+  }
+
+  # function declaration
+  {
+    include: '#function_declaration'
   }
 
   # identifier
@@ -190,6 +210,20 @@ repository: # An array of rules. If you're going to be referencing one bit of co
       }
     ]
 
+  function_declaration:
+    patterns: [
+      {
+        match: '(?<!\\.)\\b(function)|(async|gen|func)\\s+([a-zA-Z_$][\\w$]*)(?=\\s*\\()'
+        captures:
+          '1':
+            name: 'invalid.illegal.fire'
+          '2':
+            name: 'storage.type.function.fire'
+          '3':
+            name: 'entity.name.function.fire'
+      }
+    ]
+
   strings:
     patterns: [
       {
@@ -211,12 +245,56 @@ repository: # An array of rules. If you're going to be referencing one bit of co
       }
     ]
 
+  numbers:
+    patterns: [
+      {
+        match: '\d+'
+        name: 'constant.numeric.decimal.fire'
+      }
+    ]
+
+
   identifier:
     patterns: [
       {
-        match: '\\b[a-zA-Z0-9_]+\\b',
+        match: '\\b[a-zA-Z0-9_$]+\\b',
         name: 'variable.other.identifier.fire'
       }
+    ]
+
+  call_expression:
+    patterns: [
+      {
+        begin: '\\b([a-zA-Z0-9_$]+)\\s*(?=\\()'
+        end: '(?<=\\))'
+        beginCaptures:
+          '1':
+            name: 'entity.name.function.fire'
+        name: 'meta.function-call.fire'
+        patterns: [
+          {
+            begin: '\\('
+            beginCaptures:
+              '0':
+                'name': 'punctuation.definition.arguments.begin.bracket.round.fire'
+            end: '\\)'
+            endCaptures:
+              '0':
+                'name': 'punctuation.definition.arguments.end.bracket.round.fire'
+            name: 'meta.arguments.fire'
+            patterns: [
+              {
+                include: '#expressions'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+
+  arguments:
+    patterns: [
+
     ]
 
   illegal_chars:
@@ -231,6 +309,9 @@ repository: # An array of rules. If you're going to be referencing one bit of co
     patterns: [
       {
         include: '#strings'
+      }
+      {
+        include: '#call_expression'
       }
       {
         include: '#identifier'
