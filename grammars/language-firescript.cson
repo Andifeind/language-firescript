@@ -317,6 +317,19 @@ repository: # An array of rules. If you're going to be referencing one bit of co
         include: '#identifier'
       }
       {
+        include: '#member_expression'
+      }
+      {
         include: '#comments'
+      }
+    ]
+
+  member_expression:
+    patterns: [
+      {
+        match: '\\b([a-zA-Z0-9_$])(\\.)+\\b',
+        captures:
+          1: 'variable.other.identifier.fire'
+          2: 'meta.delimiter.property.period.fire'
       }
     ]
