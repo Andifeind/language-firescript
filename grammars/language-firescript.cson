@@ -130,8 +130,7 @@ patterns: [ # An array of individual pattern declarations.
 
   # binary operators
   {
-    match: 'instanceof|in|\\+|\\-|\\*|/|%|\\*\\*|\\||\\^|\\&|==|!=|===|!==|<|>|>=|<=|<<|>>|>>>'
-    name: 'keyword.operator.binary.fire'
+    include: '#binary_expression'
   }
 
   # update operators
@@ -311,13 +310,16 @@ repository: # An array of rules. If you're going to be referencing one bit of co
         include: '#strings'
       }
       {
+        include: '#member_expression'
+      }
+      {
         include: '#call_expression'
       }
       {
         include: '#identifier'
       }
       {
-        include: '#member_expression'
+        include: '#binary_expression'
       }
       {
         include: '#comments'
@@ -327,9 +329,22 @@ repository: # An array of rules. If you're going to be referencing one bit of co
   member_expression:
     patterns: [
       {
-        match: '\\b([a-zA-Z0-9_$])(\\.)+\\b',
+        match: '\\b([a-zA-Z0-9_$]+)(\\.)',
         captures:
-          1: 'variable.other.identifier.fire'
-          2: 'meta.delimiter.property.period.fire'
+          1:
+            name: 'variable.other.identifier.fire'
+          2:
+            name: 'meta.delimiter.property.period.fire'
+      }
+    ]
+
+  binary_expression:
+    patterns: [
+      {
+        match: '\\s*(instanceof|in|\\+|\\-|\\*|/|%|\\*\\*|\\||\\^|\\&|===|!==|==|!=|<|>|>=|<=|<<|>>|>>>)\\s*'
+        name: 'keyword.operator.binary.fire'
+      }
+      {
+        include: '#expressions'
       }
     ]
