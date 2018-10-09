@@ -63,7 +63,7 @@ patterns: [ # An array of individual pattern declarations.
 
   # const
   {
-    match: '(?<!\\.)\\b(const)(?!\\s*:)(?:\\s+(any|arr|bool|func|num|obj|reg|str))?\\b(?:\\s+([a-zA-Z_$][\\w$]*))'
+    match: '(?<!\\.)\\b(const)(?!\\s*:)(?:\\s+(any|arr|bool|func|num|obj|reg|str))?\\b(?:\\s+([a-zA-Z_$][\\w$]*))(?:\\s*=\\s*)?'
     captures:
       1:
         name: 'storage.type.const.fire'
@@ -121,6 +121,11 @@ patterns: [ # An array of individual pattern declarations.
   # strings
   {
     include: '#strings'
+  }
+
+  # regexp
+  {
+    include: '#regexp'
   }
 
   # comments
@@ -247,7 +252,7 @@ repository: # An array of rules. If you're going to be referencing one bit of co
   numbers:
     patterns: [
       {
-        match: '\d+'
+        match: '-?\d+'
         name: 'constant.numeric.decimal.fire'
       }
     ]
@@ -258,6 +263,40 @@ repository: # An array of rules. If you're going to be referencing one bit of co
       {
         match: '\\b[a-zA-Z0-9_$]+\\b',
         name: 'variable.other.identifier.fire'
+      }
+    ]
+
+  regexp:
+    patterns: [
+      {
+        begin: '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])(?=.*/)'
+        end: '/([gsmiuy]*)'
+        name: 'string.regexp.fire'
+        endCaptures:
+          1:
+            name: 'meta.flag.regexp.fire'
+        patterns: [
+          {
+            match: '\\\\[wWsSdDntvrf]'
+            name: 'constant.character.character-class.regexp.fire'
+          }
+          {
+            match: '\\\\([0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4})'
+            name: 'constant.character.numeric.regexp.fire'
+          }
+          {
+            match: '\\\\c[A-Z]'
+            name: 'constant.character.control.regexp.fire'
+          }
+          {
+            match: '\\\\.'
+            name: 'constant.character.escape.backslash.regexp.fire'
+          }
+          {
+            match: '[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??'
+            name: 'keyword.operator.quantifier.regexp.fire'
+          }
+        ]
       }
     ]
 
@@ -310,6 +349,9 @@ repository: # An array of rules. If you're going to be referencing one bit of co
         include: '#strings'
       }
       {
+        include: '#regexp'
+      }
+      {
         include: '#member_expression'
       }
       {
@@ -341,7 +383,7 @@ repository: # An array of rules. If you're going to be referencing one bit of co
   binary_expression:
     patterns: [
       {
-        match: '\\s*(instanceof|in|\\+|\\-|\\*|/|%|\\*\\*|\\||\\^|\\&|===|!==|==|!=|<|>|>=|<=|<<|>>|>>>)\\s*'
+        match: '\\s*(instanceof|in|\\+|\\-|\\*|(/?<!=\\s*)|%|\\*\\*|\\||\\^|\\&|===|!==|==|!=|<|>|>=|<=|<<|>>|>>>)\\s*'
         name: 'keyword.operator.binary.fire'
       }
       {
