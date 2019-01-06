@@ -28,7 +28,7 @@ patterns: [ # An array of individual pattern declarations.
 
   # keywords
   {
-    match: '(?<!\\.)\\b(sync|await|break|case|catch|continue|debugger|default|do|export|for|func|gen|import|new|return|switch|try|while|yield)(?!\\s*:)\\b'
+    match: '(?<!\\.)\\b(sync|await|break|case|catch|continue|debugger|default|do|export|func|gen|import|new|return|switch|try|yield)(?!\\s*:)\\b'
     name: 'keyword.control.fire'
   }
 
@@ -75,32 +75,22 @@ patterns: [ # An array of individual pattern declarations.
 
   # if .. else
   {
-    begin: '(?<!\\.)\\b((?:el)?if)(?!\\s*:)\\s*'
-    end: '$'
-    beginCaptures:
-      1:
-        name: 'keyword.control.fire'
-    patterns: [
-      {
-        include: '#expressions'
-      }
-      {
-        include: '#comments'
-      }
-      {
-        include: '#illegal_chars'
-      }
-    ]
+    include: '#if_statement'
   }
 
   # else
   {
-    match: '(?<!\\.)\\b(else)(?:\\s+(if))?(?!\\s*:)\\s*'
-    captures:
-      '1':
-         name: 'keyword.control.fire'
-      '2':
-        name: 'invalid.illegal.fire'
+    include: '#else_statement'
+  }
+
+  # while
+  {
+    include: '#while_statement'
+  }
+
+  # for
+  {
+    include: '#for_statement'
   }
 
   # function calls
@@ -111,6 +101,11 @@ patterns: [ # An array of individual pattern declarations.
   # function declaration
   {
     include: '#function_declaration'
+  }
+
+  # member expressions
+  {
+    include: '#member_expression'
   }
 
   # identifier
@@ -135,7 +130,7 @@ patterns: [ # An array of individual pattern declarations.
 
   # binary operators
   {
-    include: '#binary_expression'
+    include: '#binary_operators'
   }
 
   # update operators
@@ -146,8 +141,7 @@ patterns: [ # An array of individual pattern declarations.
 
   # unary operators
   {
-    match: '~|!|delete|void|typeof'
-    name: 'keyword.operator.unary.fire'
+    include: '#unary_operators'
   }
 
   # assignment operators
@@ -160,6 +154,11 @@ patterns: [ # An array of individual pattern declarations.
   {
     match: '\\.\\.\\.|\\.|\\(|\\)|\\{|\\}|\\[|\\]|,|:|;|\\?'
     name: 'keyword.operator.other.fire'
+  }
+
+  {
+    match: 'break|continue'
+    name: 'keyword.control.fire'
   }
 
   # anything else
@@ -269,7 +268,7 @@ repository: # An array of rules. If you're going to be referencing one bit of co
   regexp:
     patterns: [
       {
-        begin: '(?<=[\\[{=(?:+*,!~-]|^|return|=>|&&|\\|\\|)\\s*(/)(?![/*+?])(?=.*/)'
+        begin: '(?<=[\\[{=(?:+*,!~-]|^|return|if|=>|&&|\\|\\|)\\s*(/)(?![/*+?])(?=.*/)'
         end: '/([gsmiuy]*)'
         name: 'string.regexp.fire'
         endCaptures:
@@ -361,7 +360,10 @@ repository: # An array of rules. If you're going to be referencing one bit of co
         include: '#identifier'
       }
       {
-        include: '#binary_expression'
+        include: '#unary_operators'
+      }
+      {
+        include: '#binary_operators'
       }
       {
         include: '#comments'
@@ -380,7 +382,7 @@ repository: # An array of rules. If you're going to be referencing one bit of co
       }
     ]
 
-  binary_expression:
+  binary_operators:
     patterns: [
       {
         match: '\\s*(instanceof|in|\\+|\\-|\\*|(/?<!=\\s*)|%|\\*\\*|\\||\\^|\\&|===|!==|==|!=|<|>|>=|<=|<<|>>|>>>)\\s*'
@@ -388,5 +390,100 @@ repository: # An array of rules. If you're going to be referencing one bit of co
       }
       {
         include: '#expressions'
+      }
+    ]
+
+  unary_operators:
+    patterns: [
+      {
+        match: '~|!|delete|void|typeof'
+        name: 'keyword.operator.unary.fire'
+      }
+    ]
+
+  if_statement:
+    patterns: [
+      {
+        begin: '(?<!\\.)\\b((?:el)?if)(?!\\s*:)\\s*'
+        end: '$'
+        beginCaptures:
+          1:
+            name: 'keyword.control.fire'
+        patterns: [
+          {
+            include: '#expressions'
+          }
+          {
+            include: '#comments'
+          }
+          {
+            include: '#illegal_chars'
+          }
+        ]
+      }
+    ]
+
+  else_statement:
+    patterns: [
+      {
+        match: '(?<!\\.)\\b(else)(?:\\s+(if))?(?!\\s*:)\\s*'
+        captures:
+          '1':
+             name: 'keyword.control.fire'
+          '2':
+            name: 'invalid.illegal.fire'
+      }
+    ]
+
+  for_statement:
+    patterns: [
+      {
+        begin: '(?<!\\.)\\b(for)(?!\\s*:)\\s*'
+        end: '$'
+        name: 'keyword.control.for.fire'
+        beginCaptures:
+          1:
+            name: 'keyword.control.fire'
+        patterns: [
+          {
+            include: '#expressions'
+          }
+          {
+            match: '\\s*of\\s'
+            name: 'keyword.control.fire'
+          }
+          {
+            match: '\\s*[=;]\\s'
+            name: 'keyword.control.fire'
+          }
+          {
+            include: '#comments'
+          }
+          {
+            include: '#illegal_chars'
+          }
+        ]
+      }
+    ]
+
+  while_statement:
+    patterns: [
+      {
+        begin: '(?<!\\.)\\b(while)(?!\\s*:)\\s*'
+        end: '$'
+        beginCaptures:
+          1:
+            name: 'keyword.control.fire'
+        patterns: [
+          {
+            include: '#expressions'
+          }
+          {
+            include: '#comments'
+          }
+          {
+            include: '#illegal_chars'
+          }
+        ]
       }
     ]

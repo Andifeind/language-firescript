@@ -28,3 +28,34 @@ function bla ()
 func foo (arg, second, third = 123)
   const a = 'bb'
   return a
+
+this.foo()
+this.bla.blub()
+this.bar = 'Hello'
+
+if !foo
+  bla(!blub)
+
+while loop
+  break
+
+for i of items
+  break
+
+for i = 0; i < 100; i += 1
+  var foo = 1
+  break
+
+for el in items
+  break
+
+# no brace in if, for and while
+
+if (foo)
+  log 'OK'
+
+while (loop)
+  break
+
+for (i of items)
+  break
