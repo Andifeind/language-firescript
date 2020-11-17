@@ -160,12 +160,6 @@ patterns: [ # An array of individual pattern declarations.
     match: 'break|continue'
     name: 'keyword.control.fire'
   }
-
-  # anything else
-  # {
-  #   match: '.+\\b'
-  #   name: 'invalid.illegal.fire'
-  # }
 ]
 
 repository: # An array of rules. If you're going to be referencing one bit of code over and over again, stick it here so that you can edit all in one place.
@@ -334,14 +328,6 @@ repository: # An array of rules. If you're going to be referencing one bit of co
 
     ]
 
-  illegal_chars:
-    patterns: [
-      {
-        name: 'invalid.illegal.fire'
-        match: '\\s*.+'
-      }
-    ]
-
   expressions:
     patterns: [
       {
@@ -416,9 +402,6 @@ repository: # An array of rules. If you're going to be referencing one bit of co
           {
             include: '#comments'
           }
-          {
-            include: '#illegal_chars'
-          }
         ]
       }
     ]
@@ -459,9 +442,6 @@ repository: # An array of rules. If you're going to be referencing one bit of co
           {
             include: '#comments'
           }
-          {
-            include: '#illegal_chars'
-          }
         ]
       }
     ]
@@ -480,9 +460,6 @@ repository: # An array of rules. If you're going to be referencing one bit of co
           }
           {
             include: '#comments'
-          }
-          {
-            include: '#illegal_chars'
           }
         ]
       }
