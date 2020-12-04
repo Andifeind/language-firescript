@@ -5,5 +5,5 @@
     'tabLength': 4
     'commentStart': '# '
     # 'foldEndPattern': '^\\s*[}\\])]'
-    'increaseIndentPattern': '^\\s*(class|func|elif|else|for|if|try|while|async|gen)\\b.*\\s*$'
-    'decreaseIndentPattern': '^\\s*(elif|else|catch)\\b.*\\s*$'
+    'increaseIndentPattern': '^\\s*(((class|func|elif|else|for|if|try|while|async|gen)\\b.*)|(.*(\\)\\s*=>|\'{3})))\\s*$'
+    'decreaseIndentPattern': '^\\s*((elif|else|catch)\\b.*|\'{3})\\s*$'
